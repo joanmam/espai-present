@@ -1,0 +1,570 @@
+<title>Espai Present</title>
+<style>
+  :root{
+    --bg:#eef1ec;
+    --surface:#ffffff;
+    --surface-soft:#e4e9e2;
+    --ink:#1e2a24;
+    --ink-soft:#54655b;
+    --line:#d6ded4;
+    --accent:#2f5d50;
+    --accent-ink:#f3f6f0;
+    --accent-warm:#a06a37;
+    --accent-warm-soft:#f1e4d3;
+    --shadow:0 1px 2px rgba(30,42,36,.06),0 8px 24px -12px rgba(30,42,36,.18);
+    --font-display:'Fraunces',Georgia,'Iowan Old Style',serif;
+    --font-body:'Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#151c18;
+      --surface:#1d2620;
+      --surface-soft:#243029;
+      --ink:#eef1ec;
+      --ink-soft:#a9b7ac;
+      --line:#31402f;
+      --accent:#7fb69e;
+      --accent-ink:#12201a;
+      --accent-warm:#d3a06c;
+      --accent-warm-soft:#2c2116;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#151c18;
+    --surface:#1d2620;
+    --surface-soft:#243029;
+    --ink:#eef1ec;
+    --ink-soft:#a9b7ac;
+    --line:#31402f;
+    --accent:#7fb69e;
+    --accent-ink:#12201a;
+    --accent-warm:#d3a06c;
+    --accent-warm-soft:#2c2116;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    padding-inline:20px;
+  }
+  a{color:inherit;}
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;text-wrap:balance;margin:0;}
+  p{margin:0;}
+  ul{list-style:none;margin:0;padding:0;}
+  .wrap{max-width:980px;margin-inline:auto;}
+
+  /* header */
+  .site-header{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding-block:14px;
+  }
+  .header-inner{
+    max-width:980px;margin-inline:auto;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand-mark{width:30px;height:30px;flex:none;}
+  .brand-name{font-family:var(--font-display);font-weight:600;font-size:1.15rem;letter-spacing:.01em;}
+  .main-nav{display:flex;gap:22px;margin-left:8px;flex-wrap:wrap;}
+  .main-nav a{text-decoration:none;font-size:.95rem;color:var(--ink-soft);border-bottom:1px solid transparent;padding-bottom:2px;}
+  .main-nav a:hover,.main-nav a:focus-visible{color:var(--ink);border-color:var(--accent-warm);}
+  .lang-switch{display:flex;gap:4px;margin-left:auto;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);}
+  .lang-switch button{
+    font-family:var(--font-body);font-size:.78rem;letter-spacing:.04em;font-weight:600;
+    border:none;background:transparent;color:var(--ink-soft);padding:5px 11px;border-radius:999px;cursor:pointer;
+  }
+  .lang-switch button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);}
+  .lang-switch button:focus-visible{outline:2px solid var(--accent-warm);outline-offset:2px;}
+
+  main{max-width:980px;margin-inline:auto;}
+
+  /* hero */
+  .hero{
+    display:flex;align-items:center;gap:40px;flex-wrap:wrap;
+    padding-block:56px 48px;
+  }
+  .hero-text{flex:1 1 380px;min-width:0;}
+  .hero-text h1{font-size:clamp(1.9rem,4vw + 1rem,3rem);letter-spacing:-.01em;}
+  .hero-sub{margin-top:16px;max-width:52ch;color:var(--ink-soft);font-size:1.08rem;}
+  .hero-visual{
+    flex:none;width:min(220px,40vw);aspect-ratio:1/1;position:relative;
+  }
+  .breath-ring{
+    position:absolute;inset:0;border-radius:50%;border:1px solid var(--accent);opacity:.5;
+    animation:breathe 7s ease-in-out infinite;
+  }
+  .breath-ring.r2{inset:18%;animation-delay:-2.3s;opacity:.7;}
+  .breath-ring.r3{inset:36%;animation-delay:-4.6s;background:var(--surface-soft);border-color:var(--accent-warm);opacity:.9;}
+  @keyframes breathe{
+    0%,100%{transform:scale(.88);opacity:.35;}
+    50%{transform:scale(1);opacity:.85;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .breath-ring{animation:none;transform:scale(.96);}
+  }
+
+  section{padding-block:40px;border-top:1px solid var(--line);}
+  section > h2{font-size:clamp(1.5rem,2.4vw + 1rem,2rem);}
+  .section-intro{color:var(--ink-soft);margin-top:10px;max-width:60ch;font-size:1.02rem;}
+
+  .resource-group{margin-top:36px;}
+  .resource-group:first-of-type{margin-top:32px;}
+  .resource-group h3{font-size:1.2rem;}
+  .resource-group > p{color:var(--ink-soft);margin-top:6px;max-width:60ch;}
+
+  .resource-list{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;
+  }
+  .resource-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:16px;display:flex;gap:12px;box-shadow:var(--shadow);
+    text-decoration:none;color:var(--ink);
+  }
+  .resource-card.static{cursor:default;}
+  a.resource-card:hover,a.resource-card:focus-visible{border-color:var(--accent-warm);}
+  .resource-icon{
+    flex:none;width:34px;height:34px;border-radius:9px;
+    background:var(--accent-warm-soft);color:var(--accent-warm);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .resource-icon svg{width:18px;height:18px;}
+  .resource-body{min-width:0;}
+  .resource-name{display:block;font-weight:600;font-size:.98rem;margin-bottom:3px;}
+  .resource-body p{color:var(--ink-soft);font-size:.9rem;}
+  .resource-link-label{display:inline-block;margin-top:8px;font-size:.8rem;font-weight:600;color:var(--accent-warm);letter-spacing:.02em;}
+
+  /* talks */
+  .example-tag{
+    display:inline-block;margin-top:16px;font-size:.78rem;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--accent-warm);background:var(--accent-warm-soft);
+    padding:5px 11px;border-radius:999px;
+  }
+  .talks-list{margin-top:24px;display:flex;flex-direction:column;gap:14px;}
+  .talk-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:18px;display:flex;gap:18px;box-shadow:var(--shadow);align-items:flex-start;
+  }
+  .talk-date{
+    flex:none;width:60px;text-align:center;border-right:1px solid var(--line);padding-right:16px;
+  }
+  .talk-day{display:block;font-family:var(--font-display);font-size:1.7rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1;}
+  .talk-month{display:block;margin-top:4px;font-size:.72rem;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;}
+  .talk-body{min-width:0;}
+  .talk-body h3{font-size:1.08rem;}
+  .talk-meta{margin-top:5px;font-size:.88rem;color:var(--accent-warm);font-weight:600;}
+  .talk-body p:last-child{margin-top:8px;color:var(--ink-soft);font-size:.94rem;}
+
+  /* footer */
+  .site-footer{
+    padding-block:36px 48px;border-top:1px solid var(--line);
+    color:var(--ink-soft);font-size:.92rem;
+  }
+  .site-footer p{max-width:60ch;}
+
+  @media (max-width:640px){
+    .hero{padding-block:40px 32px;gap:28px;}
+    .hero-visual{width:150px;order:-1;}
+    .talk-card{flex-direction:column;gap:10px;}
+    .talk-date{border-right:none;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:8px;width:auto;display:flex;align-items:baseline;gap:8px;}
+  }
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap">
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <circle cx="16" cy="16" r="10.5" stroke="var(--accent)" stroke-width="1.4"/>
+        <circle cx="16" cy="16" r="5" fill="var(--accent-warm)"/>
+      </svg>
+      <span class="brand-name">Espai Present</span>
+    </a>
+    <nav class="main-nav" aria-label="Navegació principal">
+      <a href="#recursos" data-i18n="nav.recursos">Recursos</a>
+      <a href="#xerrades" data-i18n="nav.xerrades">Xerrades</a>
+      <a href="#contacte" data-i18n="nav.contacte">Contacte</a>
+    </nav>
+    <div class="lang-switch" role="group" aria-label="Idioma">
+      <button type="button" data-lang-btn="ca" aria-pressed="true">CA</button>
+      <button type="button" data-lang-btn="es" aria-pressed="false">ES</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-text">
+      <h1 data-i18n="hero.title">Espai per practicar la presència</h1>
+      <p class="hero-sub" data-i18n="hero.subtitle">Recursos i xerrades obertes per introduir-te —o aprofundir— en la pràctica del mindfulness i la meditació, al teu ritme.</p>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="breath-ring"></div>
+      <div class="breath-ring r2"></div>
+      <div class="breath-ring r3"></div>
+    </div>
+  </section>
+
+  <section id="recursos">
+    <h2 data-i18n="recursos.heading">Recursos</h2>
+    <p class="section-intro" data-i18n="recursos.intro">Una selecció de materials per començar o mantenir la pràctica: meditacions guiades, lectures, aplicacions i formació estructurada.</p>
+
+    <div class="resource-group">
+      <h3 data-i18n="recursos.guiades.heading">Meditacions guiades</h3>
+      <p data-i18n="recursos.guiades.desc">Sessions guiades en àudio, d'uns minuts a mitja hora, per practicar sense necessitat d'experiència prèvia.</p>
+      <ul class="resource-list">
+        <li>
+          <a class="resource-card" href="https://insighttimer.com" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Insight Timer</span>
+              <p data-i18n="recursos.guiades.item1">Biblioteca gratuïta amb milers de meditacions guiades en diversos idiomes i durades.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="resource-card" href="https://www.tarabrach.com/guided-meditations/" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18c2-6 4-9 8-9s6 3 8 9"/><circle cx="12" cy="6" r="2.4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Tara Brach</span>
+              <p data-i18n="recursos.guiades.item2">Meditacions i xerrades setmanals centrades en l'autocompassió i l'acceptació.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="resource-card" href="https://www.uclahealth.org/uclamindful/free-guided-meditations" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h4l2-7 4 14 2-7h4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">UCLA Mindful (MARC)</span>
+              <p data-i18n="recursos.guiades.item3">Meditacions gratuïtes en anglès i castellà, desenvolupades per un centre de recerca universitari.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name">Jon Kabat-Zinn — Body Scan</span>
+            <p data-i18n="recursos.guiades.item4">L'exploració corporal ("body scan"), la pràctica clàssica del programa MBSR.</p>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="resource-group">
+      <h3 data-i18n="recursos.lectures.heading">Lectures i articles</h3>
+      <p data-i18n="recursos.lectures.desc">Llibres de referència per entendre els fonaments de la pràctica i la seva base científica.</p>
+      <ul class="resource-list">
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2 2 0 0 1 6 4h5v16H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-5v16h5a2 2 0 0 1 2 1.5z"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name">Wherever You Go, There You Are — Jon Kabat-Zinn</span>
+            <p data-i18n="recursos.lectures.book1">Introducció clàssica al mindfulness des de la tradició de reducció de l'estrès basada en l'atenció plena.</p>
+          </span>
+        </li>
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2 2 0 0 1 6 4h5v16H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-5v16h5a2 2 0 0 1 2 1.5z"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name">Full Catastrophe Living — Jon Kabat-Zinn</span>
+            <p data-i18n="recursos.lectures.book2">El manual complet del programa MBSR, amb exercicis i fonaments clínics.</p>
+          </span>
+        </li>
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2 2 0 0 1 6 4h5v16H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-5v16h5a2 2 0 0 1 2 1.5z"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name" data-i18n="recursos.lectures.book3name">El poder de l'ara — Eckhart Tolle</span>
+            <p data-i18n="recursos.lectures.book3">Un clàssic divulgatiu sobre viure amb atenció al moment present.</p>
+          </span>
+        </li>
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2 2 0 0 1 6 4h5v16H6a2 2 0 0 0-2 1.5z"/><path d="M20 5.5A2 2 0 0 0 18 4h-5v16h5a2 2 0 0 1 2 1.5z"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name" data-i18n="recursos.lectures.book4name">El miracle de la mindfulness — Thich Nhat Hanh</span>
+            <p data-i18n="recursos.lectures.book4">Una introducció breu i pràctica a la meditació des de la tradició budista.</p>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="resource-group">
+      <h3 data-i18n="recursos.apps.heading">Aplicacions</h3>
+      <p data-i18n="recursos.apps.desc">Eines per practicar de manera regular des del mòbil.</p>
+      <ul class="resource-list">
+        <li>
+          <a class="resource-card" href="https://insighttimer.com" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="2.4"/><path d="M10 18h4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Insight Timer</span>
+              <p data-i18n="recursos.apps.item1">Gratuïta, amb temporitzador, comunitat i biblioteca extensa.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="resource-card" href="https://www.petitbambou.com/en" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="2.4"/><path d="M10 18h4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Petit BamBou</span>
+              <p data-i18n="recursos.apps.item2">Programes estructurats en català i castellà per a principiants.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="resource-card" href="https://www.calm.com" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="2.4"/><path d="M10 18h4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Calm</span>
+              <p data-i18n="recursos.apps.item3">Meditacions, sons i contingut per dormir millor.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="resource-card" href="https://www.headspace.com" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="2.4"/><path d="M10 18h4"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Headspace</span>
+              <p data-i18n="recursos.apps.item4">Cursos progressius pensats per a l'inici de la pràctica.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="resource-group">
+      <h3 data-i18n="recursos.formacio.heading">Formació — MBSR</h3>
+      <p data-i18n="recursos.formacio.desc">Per aprofundir amb estructura i acompanyament professional.</p>
+      <ul class="resource-list">
+        <li>
+          <a class="resource-card" href="https://www.ummhealth.org/services-treatments/center-mindfulness/mindfulness-programs/mbsr" target="_blank" rel="noopener">
+            <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V6a2 2 0 0 1 2-2h9l5 5v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 4v5h5"/></svg></span>
+            <span class="resource-body">
+              <span class="resource-name">Center for Mindfulness — UMass</span>
+              <p data-i18n="recursos.formacio.item1">Programa MBSR (Mindfulness-Based Stress Reduction), 8 setmanes: el format de referència, desenvolupat originalment a la Universitat de Massachusetts.</p>
+              <span class="resource-link-label" data-i18n="recursos.linkLabel">Visita el recurs ↗</span>
+            </span>
+          </a>
+        </li>
+        <li class="resource-card static">
+          <span class="resource-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></span>
+          <span class="resource-body">
+            <span class="resource-name" data-i18n="recursos.formacio.item2name">Instructors certificats a prop teu</span>
+            <p data-i18n="recursos.formacio.item2">Cerca instructors certificats MBSR/MBCT a prop teu abans d'apuntar-te a un curs presencial.</p>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="xerrades">
+    <h2 data-i18n="xerrades.heading">Xerrades públiques</h2>
+    <p class="section-intro" data-i18n="xerrades.intro">Trobades obertes, gratuïtes i sense inscripció prèvia, per compartir la pràctica en grup.</p>
+    <span class="example-tag" data-i18n="xerrades.exampleTag">Contingut d'exemple — substitueix-lo per les teves xerrades reals</span>
+
+    <ul class="talks-list">
+      <li class="talk-card">
+        <div class="talk-date"><span class="talk-day">14</span><span class="talk-month" data-i18n="xerrades.talk1.month">OCT</span></div>
+        <div class="talk-body">
+          <h3 data-i18n="xerrades.talk1.title">Introducció al mindfulness</h3>
+          <p class="talk-meta" data-i18n="xerrades.talk1.meta">18.30 h · Biblioteca de Granollers</p>
+          <p data-i18n="xerrades.talk1.desc">Sessió oberta per conèixer els fonaments de la pràctica i provar una meditació guiada de 15 minuts.</p>
+        </div>
+      </li>
+      <li class="talk-card">
+        <div class="talk-date"><span class="talk-day">9</span><span class="talk-month" data-i18n="xerrades.talk2.month">NOV</span></div>
+        <div class="talk-body">
+          <h3 data-i18n="xerrades.talk2.title">Mindfulness i gestió de l'estrès</h3>
+          <p class="talk-meta" data-i18n="xerrades.talk2.meta">19.00 h · Centre cívic de Lliçà de Vall</p>
+          <p data-i18n="xerrades.talk2.desc">Xerrada pràctica sobre com aplicar l'atenció plena a la vida quotidiana i laboral.</p>
+        </div>
+      </li>
+      <li class="talk-card">
+        <div class="talk-date"><span class="talk-day">5</span><span class="talk-month" data-i18n="xerrades.talk3.month">DES</span></div>
+        <div class="talk-body">
+          <h3 data-i18n="xerrades.talk3.title">Meditació caminant a l'aire lliure</h3>
+          <p class="talk-meta" data-i18n="xerrades.talk3.meta">10.00 h · Parc (punt de trobada per confirmar)</p>
+          <p data-i18n="xerrades.talk3.desc">Sessió pràctica a l'exterior combinant caminada conscient i moments de silenci.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <footer id="contacte" class="site-footer">
+    <p data-i18n="footer.text">Aquesta pàgina és un esborrany personal en construcció. Escriu-me si vols més informació sobre les xerrades o els recursos.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var dict = {
+    ca: {
+      "nav.recursos":"Recursos","nav.xerrades":"Xerrades","nav.contacte":"Contacte",
+      "hero.title":"Espai per practicar la presència",
+      "hero.subtitle":"Recursos i xerrades obertes per introduir-te —o aprofundir— en la pràctica del mindfulness i la meditació, al teu ritme.",
+      "recursos.heading":"Recursos",
+      "recursos.intro":"Una selecció de materials per començar o mantenir la pràctica: meditacions guiades, lectures, aplicacions i formació estructurada.",
+      "recursos.linkLabel":"Visita el recurs ↗",
+      "recursos.guiades.heading":"Meditacions guiades",
+      "recursos.guiades.desc":"Sessions guiades en àudio, d'uns minuts a mitja hora, per practicar sense necessitat d'experiència prèvia.",
+      "recursos.guiades.item1":"Biblioteca gratuïta amb milers de meditacions guiades en diversos idiomes i durades.",
+      "recursos.guiades.item2":"Meditacions i xerrades setmanals centrades en l'autocompassió i l'acceptació.",
+      "recursos.guiades.item3":"Meditacions gratuïtes en anglès i castellà, desenvolupades per un centre de recerca universitari.",
+      "recursos.guiades.item4":"L'exploració corporal (\"body scan\"), la pràctica clàssica del programa MBSR.",
+      "recursos.lectures.heading":"Lectures i articles",
+      "recursos.lectures.desc":"Llibres de referència per entendre els fonaments de la pràctica i la seva base científica.",
+      "recursos.lectures.book1":"Introducció clàssica al mindfulness des de la tradició de reducció de l'estrès basada en l'atenció plena.",
+      "recursos.lectures.book2":"El manual complet del programa MBSR, amb exercicis i fonaments clínics.",
+      "recursos.lectures.book3name":"El poder de l'ara — Eckhart Tolle",
+      "recursos.lectures.book3":"Un clàssic divulgatiu sobre viure amb atenció al moment present.",
+      "recursos.lectures.book4name":"El miracle de la mindfulness — Thich Nhat Hanh",
+      "recursos.lectures.book4":"Una introducció breu i pràctica a la meditació des de la tradició budista.",
+      "recursos.apps.heading":"Aplicacions",
+      "recursos.apps.desc":"Eines per practicar de manera regular des del mòbil.",
+      "recursos.apps.item1":"Gratuïta, amb temporitzador, comunitat i biblioteca extensa.",
+      "recursos.apps.item2":"Programes estructurats en català i castellà per a principiants.",
+      "recursos.apps.item3":"Meditacions, sons i contingut per dormir millor.",
+      "recursos.apps.item4":"Cursos progressius pensats per a l'inici de la pràctica.",
+      "recursos.formacio.heading":"Formació — MBSR",
+      "recursos.formacio.desc":"Per aprofundir amb estructura i acompanyament professional.",
+      "recursos.formacio.item1":"Programa MBSR (Mindfulness-Based Stress Reduction), 8 setmanes: el format de referència, desenvolupat originalment a la Universitat de Massachusetts.",
+      "recursos.formacio.item2name":"Instructors certificats a prop teu",
+      "recursos.formacio.item2":"Cerca instructors certificats MBSR/MBCT a prop teu abans d'apuntar-te a un curs presencial.",
+      "xerrades.heading":"Xerrades públiques",
+      "xerrades.intro":"Trobades obertes, gratuïtes i sense inscripció prèvia, per compartir la pràctica en grup.",
+      "xerrades.exampleTag":"Contingut d'exemple — substitueix-lo per les teves xerrades reals",
+      "xerrades.talk1.month":"OCT","xerrades.talk1.title":"Introducció al mindfulness","xerrades.talk1.meta":"18.30 h · Biblioteca de Granollers","xerrades.talk1.desc":"Sessió oberta per conèixer els fonaments de la pràctica i provar una meditació guiada de 15 minuts.",
+      "xerrades.talk2.month":"NOV","xerrades.talk2.title":"Mindfulness i gestió de l'estrès","xerrades.talk2.meta":"19.00 h · Centre cívic de Lliçà de Vall","xerrades.talk2.desc":"Xerrada pràctica sobre com aplicar l'atenció plena a la vida quotidiana i laboral.",
+      "xerrades.talk3.month":"DES","xerrades.talk3.title":"Meditació caminant a l'aire lliure","xerrades.talk3.meta":"10.00 h · Parc (punt de trobada per confirmar)","xerrades.talk3.desc":"Sessió pràctica a l'exterior combinant caminada conscient i moments de silenci.",
+      "footer.text":"Aquesta pàgina és un esborrany personal en construcció. Escriu-me si vols més informació sobre les xerrades o els recursos."
+    },
+    es: {
+      "nav.recursos":"Recursos","nav.xerrades":"Charlas","nav.contacte":"Contacto",
+      "hero.title":"Un espacio para practicar la presencia",
+      "hero.subtitle":"Recursos y charlas abiertas para iniciarte —o profundizar— en la práctica del mindfulness y la meditación, a tu ritmo.",
+      "recursos.heading":"Recursos",
+      "recursos.intro":"Una selección de materiales para empezar o mantener la práctica: meditaciones guiadas, lecturas, aplicaciones y formación estructurada.",
+      "recursos.linkLabel":"Visita el recurso ↗",
+      "recursos.guiades.heading":"Meditaciones guiadas",
+      "recursos.guiades.desc":"Sesiones guiadas en audio, de unos minutos a media hora, para practicar sin necesidad de experiencia previa.",
+      "recursos.guiades.item1":"Biblioteca gratuita con miles de meditaciones guiadas en varios idiomas y duraciones.",
+      "recursos.guiades.item2":"Meditaciones y charlas semanales centradas en la autocompasión y la aceptación.",
+      "recursos.guiades.item3":"Meditaciones gratuitas en inglés y castellano, desarrolladas por un centro de investigación universitario.",
+      "recursos.guiades.item4":"El escaneo corporal (\"body scan\"), la práctica clásica del programa MBSR.",
+      "recursos.lectures.heading":"Lecturas y artículos",
+      "recursos.lectures.desc":"Libros de referencia para entender los fundamentos de la práctica y su base científica.",
+      "recursos.lectures.book1":"Introducción clásica al mindfulness desde la tradición de reducción del estrés basada en la atención plena.",
+      "recursos.lectures.book2":"El manual completo del programa MBSR, con ejercicios y fundamentos clínicos.",
+      "recursos.lectures.book3name":"El poder del ahora — Eckhart Tolle",
+      "recursos.lectures.book3":"Un clásico divulgativo sobre vivir con atención al momento presente.",
+      "recursos.lectures.book4name":"El milagro del mindfulness — Thich Nhat Hanh",
+      "recursos.lectures.book4":"Una introducción breve y práctica a la meditación desde la tradición budista.",
+      "recursos.apps.heading":"Aplicaciones",
+      "recursos.apps.desc":"Herramientas para practicar de forma regular desde el móvil.",
+      "recursos.apps.item1":"Gratuita, con temporizador, comunidad y biblioteca extensa.",
+      "recursos.apps.item2":"Programas estructurados en catalán y castellano para principiantes.",
+      "recursos.apps.item3":"Meditaciones, sonidos y contenido para dormir mejor.",
+      "recursos.apps.item4":"Cursos progresivos pensados para iniciar la práctica.",
+      "recursos.formacio.heading":"Formación — MBSR",
+      "recursos.formacio.desc":"Para profundizar con estructura y acompañamiento profesional.",
+      "recursos.formacio.item1":"Programa MBSR (Mindfulness-Based Stress Reduction), 8 semanas: el formato de referencia, desarrollado originalmente en la Universidad de Massachusetts.",
+      "recursos.formacio.item2name":"Instructores certificados cerca de ti",
+      "recursos.formacio.item2":"Busca instructores certificados MBSR/MBCT cerca de ti antes de apuntarte a un curso presencial.",
+      "xerrades.heading":"Charlas públicas",
+      "xerrades.intro":"Encuentros abiertos, gratuitos y sin inscripción previa, para compartir la práctica en grupo.",
+      "xerrades.exampleTag":"Contenido de ejemplo — sustitúyelo por tus charlas reales",
+      "xerrades.talk1.month":"OCT","xerrades.talk1.title":"Introducción al mindfulness","xerrades.talk1.meta":"18.30 h · Biblioteca de Granollers","xerrades.talk1.desc":"Sesión abierta para conocer los fundamentos de la práctica y probar una meditación guiada de 15 minutos.",
+      "xerrades.talk2.month":"NOV","xerrades.talk2.title":"Mindfulness y gestión del estrés","xerrades.talk2.meta":"19.00 h · Centro cívico de Lliçà de Vall","xerrades.talk2.desc":"Charla práctica sobre cómo aplicar la atención plena a la vida cotidiana y laboral.",
+      "xerrades.talk3.month":"DIC","xerrades.talk3.title":"Meditación caminando al aire libre","xerrades.talk3.meta":"10.00 h · Parque (punto de encuentro por confirmar)","xerrades.talk3.desc":"Sesión práctica al aire libre combinando caminata consciente y momentos de silencio.",
+      "footer.text":"Esta página es un borrador personal en construcción. Escríbeme si quieres más información sobre las charlas o los recursos."
+    },
+    en: {
+      "nav.recursos":"Resources","nav.xerrades":"Talks","nav.contacte":"Contact",
+      "hero.title":"A space to practice presence",
+      "hero.subtitle":"Resources and open talks to help you start —or deepen— your mindfulness and meditation practice, at your own pace.",
+      "recursos.heading":"Resources",
+      "recursos.intro":"A selection of materials to start or sustain your practice: guided meditations, reading, apps and structured training.",
+      "recursos.linkLabel":"Visit resource ↗",
+      "recursos.guiades.heading":"Guided meditations",
+      "recursos.guiades.desc":"Audio-guided sessions, from a few minutes to half an hour, no prior experience required.",
+      "recursos.guiades.item1":"Free library with thousands of guided meditations in multiple languages and lengths.",
+      "recursos.guiades.item2":"Weekly meditations and talks focused on self-compassion and acceptance.",
+      "recursos.guiades.item3":"Free meditations in English and Spanish, developed by a university research centre.",
+      "recursos.guiades.item4":"The body scan, the classic practice from the MBSR programme.",
+      "recursos.lectures.heading":"Reading",
+      "recursos.lectures.desc":"Reference books for understanding the foundations of the practice and its scientific basis.",
+      "recursos.lectures.book1":"A classic introduction to mindfulness from the stress-reduction tradition.",
+      "recursos.lectures.book2":"The complete MBSR programme manual, with exercises and clinical grounding.",
+      "recursos.lectures.book3name":"The Power of Now — Eckhart Tolle",
+      "recursos.lectures.book3":"A popular classic on living with attention to the present moment.",
+      "recursos.lectures.book4name":"The Miracle of Mindfulness — Thich Nhat Hanh",
+      "recursos.lectures.book4":"A short, practical introduction to meditation from the Buddhist tradition.",
+      "recursos.apps.heading":"Apps",
+      "recursos.apps.desc":"Tools for practicing regularly from your phone.",
+      "recursos.apps.item1":"Free, with a timer, community and an extensive library.",
+      "recursos.apps.item2":"Structured programmes in Catalan and Spanish for beginners.",
+      "recursos.apps.item3":"Meditations, soundscapes and content for better sleep.",
+      "recursos.apps.item4":"Progressive courses designed to start the practice.",
+      "recursos.formacio.heading":"Training — MBSR",
+      "recursos.formacio.desc":"For going deeper with structure and professional guidance.",
+      "recursos.formacio.item1":"The MBSR (Mindfulness-Based Stress Reduction) programme, 8 weeks: the reference format, originally developed at the University of Massachusetts.",
+      "recursos.formacio.item2name":"Certified instructors near you",
+      "recursos.formacio.item2":"Look for certified MBSR/MBCT instructors near you before joining an in-person course.",
+      "xerrades.heading":"Public talks",
+      "xerrades.intro":"Open, free gatherings with no sign-up required, to share the practice as a group.",
+      "xerrades.exampleTag":"Example content — replace with your own talks",
+      "xerrades.talk1.month":"OCT","xerrades.talk1.title":"Introduction to mindfulness","xerrades.talk1.meta":"6.30 pm · Granollers Library","xerrades.talk1.desc":"An open session to learn the fundamentals of the practice and try a 15-minute guided meditation.",
+      "xerrades.talk2.month":"NOV","xerrades.talk2.title":"Mindfulness and stress management","xerrades.talk2.meta":"7.00 pm · Lliçà de Vall community centre","xerrades.talk2.desc":"A practical talk on applying mindful attention to everyday and working life.",
+      "xerrades.talk3.month":"DEC","xerrades.talk3.title":"Outdoor walking meditation","xerrades.talk3.meta":"10.00 am · Park (meeting point to be confirmed)","xerrades.talk3.desc":"An outdoor practice session combining mindful walking with moments of silence.",
+      "footer.text":"This page is a personal draft, still in progress. Get in touch if you'd like more information about the talks or resources."
+    }
+  };
+
+  var root = document.documentElement;
+  var buttons = document.querySelectorAll('[data-lang-btn]');
+  var nodes = document.querySelectorAll('[data-i18n]');
+
+  function applyLang(lang){
+    if(!dict[lang]) lang = 'ca';
+    var strings = dict[lang];
+    nodes.forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(strings[key] !== undefined){ el.textContent = strings[key]; }
+    });
+    buttons.forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+    });
+    root.setAttribute('lang', lang);
+    try{ localStorage.setItem('espai-present-lang', lang); }catch(e){}
+  }
+
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang-btn')); });
+  });
+
+  var initial = 'ca';
+  try{
+    var saved = localStorage.getItem('espai-present-lang');
+    if(saved && dict[saved]) initial = saved;
+  }catch(e){}
+  applyLang(initial);
+})();
+</script>
