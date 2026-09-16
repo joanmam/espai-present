@@ -150,7 +150,10 @@
   .talk-card{
     background:var(--surface);border:1px solid var(--line);border-radius:14px;
     padding:18px;display:flex;gap:18px;box-shadow:var(--shadow);align-items:flex-start;
+    text-decoration:none;color:var(--ink);
   }
+  a.talk-card:hover,a.talk-card:focus-visible{border-color:var(--accent-warm);}
+  .talk-link-label{display:inline-block;margin-top:8px;font-size:.8rem;font-weight:600;color:var(--accent-warm);letter-spacing:.02em;}
   .talk-date{
     flex:none;width:60px;text-align:center;border-right:1px solid var(--line);padding-right:16px;
   }
@@ -424,35 +427,33 @@
 
   <section id="xerrades">
     <h2>Public talks</h2>
-    <p class="section-intro">Open, free gatherings with no sign-up required, to share the practice as a group.</p>
-    <span class="example-tag">Example content — replace with your own talks</span>
+    <p class="section-intro">Mindfulness programmes and workshops within about 30 km of Lliçà de Vall, running over the next few months. Dates and prices change — check each link before you go.</p>
 
     <ul class="talks-list">
-      <li class="talk-card">
-        <div class="talk-date"><span class="talk-day">14</span><span class="talk-month">OCT</span></div>
-        <div class="talk-body">
-          <h3>Introduction to mindfulness</h3>
-          <p class="talk-meta">6.30 pm · Granollers Library</p>
-          <p>An open session to learn the fundamentals of the practice and try a 15-minute guided meditation.</p>
-        </div>
+      <li>
+        <a class="talk-card" href="https://www.upg.cat/1q25-26/mindf1q/" target="_blank" rel="noopener">
+          <div class="talk-date"><span class="talk-day">–</span><span class="talk-month">OPEN</span></div>
+          <div class="talk-body">
+            <h3>Mindfulness — Universitat Popular de Granollers</h3>
+            <p class="talk-meta">Granollers (~6 km) · 1st term, autumn 2025–26</p>
+            <p>An ongoing, structured mindfulness course open to the public through Granollers' adult-education institute.</p>
+            <span class="talk-link-label">Visit resource ↗</span>
+          </div>
+        </a>
       </li>
-      <li class="talk-card">
-        <div class="talk-date"><span class="talk-day">9</span><span class="talk-month">NOV</span></div>
-        <div class="talk-body">
-          <h3>Mindfulness and stress management</h3>
-          <p class="talk-meta">7.00 pm · Lliçà de Vall community centre</p>
-          <p>A practical talk on applying mindful attention to everyday and working life.</p>
-        </div>
-      </li>
-      <li class="talk-card">
-        <div class="talk-date"><span class="talk-day">5</span><span class="talk-month">DEC</span></div>
-        <div class="talk-body">
-          <h3>Outdoor walking meditation</h3>
-          <p class="talk-meta">10.00 am · Park (meeting point to be confirmed)</p>
-          <p>An outdoor practice session combining mindful walking with moments of silence.</p>
-        </div>
+      <li>
+        <a class="talk-card" href="https://psitam.com/mindfulness/" target="_blank" rel="noopener">
+          <div class="talk-date"><span class="talk-day">–</span><span class="talk-month">OPEN</span></div>
+          <div class="talk-body">
+            <h3>Mindfulness workshops — Psitam</h3>
+            <p class="talk-meta">Granollers (~6 km) · ongoing, in person</p>
+            <p>A local psychology practice running mindfulness courses and workshops; contact them for the next start date.</p>
+            <span class="talk-link-label">Visit resource ↗</span>
+          </div>
+        </a>
       </li>
     </ul>
+    <p class="section-intro" style="margin-top:18px;font-size:.9rem;">Couldn't yet confirm a third nearby option with a reliable date — many town-hall and library event calendars aren't reachable by automated search. The weekly check keeps looking.</p>
   </section>
 
   <footer id="contacte" class="site-footer">
